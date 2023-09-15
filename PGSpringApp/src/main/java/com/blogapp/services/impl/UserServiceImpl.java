@@ -1,4 +1,4 @@
-package com.blogapp.services;
+package com.blogapp.services.impl;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -11,6 +11,7 @@ import com.blogapp.entities.User;
 import com.blogapp.exceptions.ResourceNotFoundException;
 import com.blogapp.payloads.UserDto;
 import com.blogapp.repositories.UserRepo;
+import com.blogapp.services.UserService;
 
 @Service
 public class UserServiceImpl implements UserService {
