@@ -18,10 +18,10 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserRepo userRepo;
-	
+
 	@Autowired
 	private ModelMapper modelMapper;
-	
+
 	@Override
 	public UserDto generateUser(UserDto userDto) {
 		User user = mapUserDtotoUser(userDto);
@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserDto updateUser(UserDto userDto, Integer userId) {
-		User user = userRepo.findById(userId).orElseThrow(()->new ResourceNotFoundException("User", "Id", userId));
+		User user = userRepo.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User", "Id", userId));
 		user.setName(userDto.getName());
 		user.setEmailId(userDto.getEmailId());
 		user.setPassword(userDto.getPassword());
@@ -43,7 +43,8 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserDto fetchUserById(Integer userId) {
-		User userById = userRepo.findById(userId).orElseThrow(()-> new ResourceNotFoundException("User", "Id", userId));
+		User userById = userRepo.findById(userId)
+				.orElseThrow(() -> new ResourceNotFoundException("User", "Id", userId));
 		UserDto mapUsertoUserDto = mapUsertoUserDto(userById);
 		return mapUsertoUserDto;
 	}
@@ -57,7 +58,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void deleteUser(Integer userId) {
-		User user = userRepo.findById(userId).orElseThrow(()-> new ResourceNotFoundException("User", "Id", userId));
+		User user = userRepo.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User", "Id", userId));
 		userRepo.delete(user);
 	}
 
@@ -72,9 +73,9 @@ public class UserServiceImpl implements UserService {
 //		user.setPassword(userDto.getPassword());
 //		user.setAbout(userDto.getAbout());
 		return user;
-		
+
 	}
-	
+
 	/*
 	 * This method will convert user to userdto object
 	 */
@@ -86,6 +87,6 @@ public class UserServiceImpl implements UserService {
 //		userDto.setPassword(user.getPassword());
 //		userDto.setAbout(user.getAbout());
 		return userDto;
-		
+
 	}
 }
