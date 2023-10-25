@@ -15,7 +15,7 @@ public interface PostService {
 	void deletePost(Integer postId);
 
 	// fetchall
-	List<PostDto> viewPosts();
+	List<PostDto> viewPosts(Integer pageNumber,Integer pageSize);
 
 	// fetchById
 	PostDto viewPost(Integer postId);
