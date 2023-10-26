@@ -2,6 +2,7 @@ package com.blogapp.services;
 
 import java.util.List;
 import com.blogapp.payloads.PostDto;
+import com.blogapp.payloads.PostResponse;
 
 public interface PostService {
 
@@ -15,7 +16,7 @@ public interface PostService {
 	void deletePost(Integer postId);
 
 	// fetchall
-	List<PostDto> viewPosts(Integer pageNumber,Integer pageSize);
+	PostResponse viewPosts(Integer pageNumber,Integer pageSize);
 
 	// fetchById
 	PostDto viewPost(Integer postId);
