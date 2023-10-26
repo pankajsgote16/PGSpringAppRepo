@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.blogapp.config.AppConstants;
 import com.blogapp.payloads.ApiResponse;
 import com.blogapp.payloads.PostDto;
 import com.blogapp.payloads.PostResponse;
@@ -36,12 +38,11 @@ public class PostController {
 	// getAllPosts
 	@GetMapping("/posts")
 	public ResponseEntity<PostResponse> fetchAllPosts(
-			@RequestParam(value ="pageNumber", defaultValue = "0", required = false) Integer pageNumber,
-			@RequestParam(value ="pageSize", defaultValue = "10", required = false) Integer pageSize,
-			@RequestParam(value ="sortBy", defaultValue = "postId", required = false) String sortBy,
-			@RequestParam(value = "sortDir",defaultValue = "asc",required = false)String sortDir
-			) {
-		PostResponse posts = this.postService.viewPosts(pageNumber,pageSize,sortBy,sortDir);
+			@RequestParam(value = "pageNumber", defaultValue = AppConstants.PAGE_NUMBER, required = false) Integer pageNumber,
+			@RequestParam(value = "pageSize", defaultValue = AppConstants.PAGE_SIZE, required = false) Integer pageSize,
+			@RequestParam(value = "sortBy", defaultValue = AppConstants.SORT_BY, required = false) String sortBy,
+			@RequestParam(value = "sortDir", defaultValue = AppConstants.SORT_DIR, required = false) String sortDir) {
+		PostResponse posts = this.postService.viewPosts(pageNumber, pageSize, sortBy, sortDir);
 		return new ResponseEntity<PostResponse>(posts, HttpStatus.OK);
 	}
 
@@ -79,8 +80,8 @@ public class PostController {
 		this.postService.deletePost(postId);
 		return new ApiResponse("Post Deleted Successfullyy ! ! !", true);
 	}
-	
-	//Search Post
+
+	// Search Post
 	@GetMapping("/posts/search/{keywords}")
 	public ResponseEntity<List<PostDto>> searchPost(@PathVariable("keywords") String keyWords) {
 		List<PostDto> searchPosts = this.postService.searchPosts(keyWords);
