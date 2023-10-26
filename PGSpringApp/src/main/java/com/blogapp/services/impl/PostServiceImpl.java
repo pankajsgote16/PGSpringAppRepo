@@ -1,5 +1,4 @@
 package com.blogapp.services.impl;
-
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -8,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import com.blogapp.entities.Category;
 import com.blogapp.entities.Post;
@@ -56,8 +56,19 @@ public class PostServiceImpl implements PostService {
 
 	// GetAllPosts
 	@Override
-	public PostResponse viewPosts(Integer pageNumber, Integer pageSize) {
-		Pageable pageable = PageRequest.of(pageNumber, pageSize);
+	public PostResponse viewPosts(Integer pageNumber, Integer pageSize,String sortBy,String sortDir) {
+		
+		//Decided how to sort in Asc or Des (If/else)
+//		Sort sort = null;
+//		if (sortDir.equalsIgnoreCase("asc")) {
+//			sort=Sort.by(sortBy).ascending();
+//		}else if (sortDir.equalsIgnoreCase("desc")) {
+//			sort=Sort.by(sortBy).descending();
+//		}
+		//Decided how to sort in Asc or Des (using ternary operators)
+		Sort sort = sortDir.equalsIgnoreCase("asc")?Sort.by(sortBy).ascending():Sort.by(sortBy).descending();
+		
+		Pageable pageable = PageRequest.of(pageNumber, pageSize,sort);
 		Page<Post> pagePosts = this.postRepo.findAll(pageable);
 		List<Post> allPosts = pagePosts.getContent();
 		List<PostDto> postDtos = allPosts.stream().map(post -> this.modelMapper.map(post, PostDto.class))
