@@ -20,6 +20,8 @@ import com.blogapp.repositories.PostRepo;
 import com.blogapp.repositories.UserRepo;
 import com.blogapp.services.PostService;
 
+import net.bytebuddy.asm.Advice.This;
+
 @Service
 public class PostServiceImpl implements PostService {
 
@@ -133,8 +135,9 @@ public class PostServiceImpl implements PostService {
 
 	@Override
 	public List<PostDto> searchPosts(String keyword) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Post> posts = postRepo.findByTitleContaining(keyword);
+		List<PostDto> postDtos = posts.stream().map(post -> this.modelMapper.map(post, PostDto.class)).collect(Collectors.toList());
+		return postDtos;
 	}
 
 }
